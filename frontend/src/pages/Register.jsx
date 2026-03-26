@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -7,6 +8,8 @@ export default function Register() {
   const [role, setRole] = useState("student");
   const [company, setCompany] = useState("");
   const [designation, setDesignation] = useState("");
+
+  const navigate = useNavigate();
 
   const handleRegister = async () => {
     try {
@@ -19,8 +22,10 @@ export default function Register() {
       });
 
       alert("Registered successfully!");
+      navigate("/login");
+
     } catch (err) {
-      alert("Error in registration");
+      alert(err.response?.data?.error || "Registration failed");
     }
   };
 
@@ -38,15 +43,11 @@ export default function Register() {
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
       />
-
-      {/* 🔽 ROLE SELECTION */}
       <label>Select Role:</label>
       <select onChange={(e) => setRole(e.target.value)}>
         <option value="student">Student</option>
         <option value="employee">Hirer / Employee</option>
       </select>
-
-      {/* 🔥 SHOW ONLY FOR HIRER */}
       {role === "employee" && (
         <div>
           <input
@@ -62,6 +63,12 @@ export default function Register() {
       )}
 
       <button onClick={handleRegister}>Register</button>
+      <p>
+        Already have an account?{" "}
+        <button onClick={() => navigate("/login")}>
+          Login
+        </button>
+      </p>
     </div>
   );
 }

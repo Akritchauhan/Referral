@@ -4,6 +4,13 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
 import ResumeUpload from "./pages/ResumeUpload";
+import RoleSelect from "./pages/RoleSelect";
+
+<Routes>
+  <Route path="/" element={<RoleSelect />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+</Routes>
 
 function App() {
   return (
@@ -14,7 +21,10 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/upload" element={<ResumeUpload />} />
-      </Routes>
+        <Route path="/" element={<RoleSelect />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        </Routes>
     </BrowserRouter>
   );
 }
