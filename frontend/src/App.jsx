@@ -1,33 +1,26 @@
+// frontend/src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Jobs from "./pages/jobs";
-import ResumeUpload from "./pages/ResumeUpload";
-import RoleSelect from "./pages/RoleSelect";
+import Jobs from "./pages/jobs"; 
+import ResumeUpload from "./pages/resumeUpload"; 
 import CreateJob from "./pages/CreateJob";
 import MyJobs from "./pages/MyJobs";
-
-<Routes>
-  <Route path="/" element={<RoleSelect />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/register" element={<Register />} />
-</Routes>
-
-// frontend/src/App.jsx
+// RoleSelect import removed
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Landing/Role selection */}
-        <Route path="/" element={<RoleSelect />} />
+        {/* Set Login as the starting page */}
+        <Route path="/" element={<Login />} />
         
         {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
-        {/* Protected/Dashboard Routes */}
+        {/* Dashboard & Feature Routes */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/upload" element={<ResumeUpload />} />
