@@ -1,60 +1,38 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./common.css";
 
 export default function ViewJobs() {
   const [jobs, setJobs] = useState([]);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    if (!token) {
-      console.log("No token found");
-      return;
-    }
-
     axios
       .get("http://127.0.0.1:8000/jobs/", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => {
-        console.log("JOBS DATA:", res.data); // 🔥 debug
-        setJobs(res.data);
-      })
-      .catch((err) => {
-        console.log("ERROR:", err.response || err);
-      });
-  }, [token]);
+      .then((res) => setJobs(res.data));
+  }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>All Jobs</h2>
+    <div className="container">
+      <h2>Jobs</h2>
 
-      {jobs.length === 0 ? (
-        <p>No jobs available</p>
-      ) : (
-        jobs.map((job) => (
-          <div
-            key={job.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            <h3>{job.title}</h3>
-            <p><strong>Company:</strong> {job.company}</p>
-            <p><strong>Description:</strong> {job.description}</p>
-            <p>
-        <strong>Skills:</strong>{" "}
-        {Array.isArray(job.skills_required) 
-          ? job.skills_required.join(", ") 
-          : job.skills_required || "Not specified"}
-      </p>
-          </div>
-        ))
-      )}
+      {jobs.map((job) => (
+        <div key={job.id} className="card">
+          <h3>{job.title}</h3>
+          <p className="text-muted">{job.company}</p>
+          <p>{job.description}</p>
+          <p className="text-primary">
+            {Array.isArray(job.skills_required)
+              ? job.skills_required.join(", ")
+              : job.skills_required}
+          </p>
+
+          <button className="btn btn-success">Apply</button>
+        </div>
+      ))}
     </div>
   );
 }

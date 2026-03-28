@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Jobs from "./pages/Jobs";
+import Jobs from "./pages/jobs";
 import ResumeUpload from "./pages/ResumeUpload";
 import RoleSelect from "./pages/RoleSelect";
 import CreateJob from "./pages/CreateJob";

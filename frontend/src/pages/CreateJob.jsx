@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./common.css";
 
 export default function CreateJob() {
   const [title, setTitle] = useState("");
@@ -8,48 +9,38 @@ export default function CreateJob() {
   const [skills, setSkills] = useState("");
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem("token");
-
-    try {
-      await axios.post(
-        "http://127.0.0.1:8000/jobs/create/",
-        {
-          title,
-          company,
-          description,
-          skills_required: skills, 
+    await axios.post(
+      "http://127.0.0.1:8000/jobs/create/",
+      {
+        title,
+        company,
+        description,
+        skills_required: skills.split(","),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      }
+    );
 
-      alert("Job posted!");
-    } catch (err) {
-      console.log(err.response);
-      alert(err.response?.data?.error || "Error posting job");
-    }
+    alert("Job Posted!");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Create Job</h2>
+    <div className="container">
+      <div className="card">
+        <h2>Create Job</h2>
 
-      <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
-      <br /><br />
+        <input className="input" placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+        <input className="input" placeholder="Company" onChange={(e) => setCompany(e.target.value)} />
+        <textarea className="input" placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
+        <input className="input" placeholder="Skills (comma separated)" onChange={(e) => setSkills(e.target.value)} />
 
-      <input placeholder="Company" onChange={(e) => setCompany(e.target.value)} />
-      <br /><br />
-
-      <textarea placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
-      <br /><br />
-
-      <input placeholder="Skills Required" onChange={(e) => setSkills(e.target.value)} />
-      <br /><br />
-
-      <button onClick={handleSubmit}>Post Job</button>
+        <button className="btn btn-primary" onClick={handleSubmit}>
+          Post Job
+        </button>
+      </div>
     </div>
   );
 }

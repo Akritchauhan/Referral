@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./common.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -18,57 +19,50 @@ export default function Register() {
         password,
         role,
         company_name: company,
-        designation: designation,
+        designation,
       });
 
-      alert("Registered successfully!");
-      navigate("/login");
-
+      alert("Registered Successfully!");
+      navigate("/");
     } catch (err) {
       alert(err.response?.data?.error || "Registration failed");
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-
-      <input
-        placeholder="Username"
-        onChange={(e) => setUsername(e.target.value)}
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <label>Select Role:</label>
-      <select onChange={(e) => setRole(e.target.value)}>
-        <option value="student">Student</option>
-        <option value="employee">Hirer / Employee</option>
-      </select>
-      {role === "employee" && (
-        <div>
-          <input
-            placeholder="Company Name"
-            onChange={(e) => setCompany(e.target.value)}
-          />
-
-          <input
-            placeholder="Designation"
-            onChange={(e) => setDesignation(e.target.value)}
-          />
-        </div>
-      )}
-
-      <button onClick={handleRegister}>Register</button>
-      <p>
-        Already have an account?{" "}
-        <button onClick={() => navigate("/login")}>
-          Login
+    <div className="auth-bg">
+      <div className="auth-box fade-in">
+  
+        <h2 className="auth-title">Create Account 🚀</h2>
+        <p className="auth-subtext">Start your journey</p>
+  
+        <input className="input" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+        <input className="input" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+  
+        <select className="input" onChange={(e) => setRole(e.target.value)}>
+          <option value="student">Student</option>
+          <option value="employee">Employee</option>
+        </select>
+  
+        {role === "employee" && (
+          <>
+            <input className="input" placeholder="Company" onChange={(e) => setCompany(e.target.value)} />
+            <input className="input" placeholder="Designation" onChange={(e) => setDesignation(e.target.value)} />
+          </>
+        )}
+  
+        <button className="btn btn-primary" onClick={handleRegister}>
+          Register
         </button>
-      </p>
+  
+        <p className="mt-20 text-center">
+          Already have an account?{" "}
+          <span className="text-primary" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+            Login
+          </span>
+        </p>
+  
+      </div>
     </div>
   );
 }
