@@ -15,11 +15,11 @@ export default function CreateJob() {
         title,
         company,
         description,
-        skills_required: skills.split(","),
+        skills_required: skills.split(",").map(s => s.trim()),
       },
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Token ${localStorage.getItem("token")}`,
         },
       }
     );
